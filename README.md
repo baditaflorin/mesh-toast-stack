@@ -1,7 +1,7 @@
 # mesh-toast-stack
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-toast-stack-ffd11a)](https://baditaflorin.github.io/mesh-toast-stack/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-toast-stack/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-toast-stack/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Rotating peer gives a one-line toast; others react 🥂/🍻; cumulative leaderboard.
