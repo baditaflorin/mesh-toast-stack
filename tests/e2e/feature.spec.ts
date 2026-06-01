@@ -12,10 +12,17 @@ test("current toaster's toast syncs + audience react syncs back", async ({ brows
   try {
     await a.getByPlaceholder("your name").fill("alice");
     await b.getByPlaceholder("your name").fill("bob");
-    await a.waitForTimeout(800);
 
-    await a.getByRole("button", { name: "start", exact: true }).click();
-    await a.waitForTimeout(400);
+    // Both peers must agree someone has joined before a round starts, otherwise
+    // the rotating turn can't resolve a name on the opposite peer.
+    await expect(b.locator(".ts-status")).toContainText("2 peers");
+
+    await a.getByRole("button", { name: "start the round", exact: true }).click();
+
+    // The round-start phase transition syncs to BOTH peers — the "toasting:"
+    // banner appears on the opposite peer too, not just the starter.
+    await expect(a.locator(".ts-current")).toBeVisible();
+    await expect(b.locator(".ts-current")).toBeVisible();
 
     const current = (await a.locator(".ts-current").innerText()).toLowerCase();
     const toaster = current.includes("alice") ? a : b;
@@ -23,7 +30,6 @@ test("current toaster's toast syncs + audience react syncs back", async ({ brows
 
     await toaster.getByPlaceholder("your toast").fill("to mesh");
     await toaster.getByRole("button", { name: "give toast", exact: true }).click();
-    await audience.waitForTimeout(400);
 
     // The advertised toast propagates to the OTHER peer.
     await expect(audience.locator(".ts-feed")).toContainText("to mesh");
