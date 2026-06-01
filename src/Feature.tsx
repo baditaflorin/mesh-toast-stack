@@ -117,17 +117,30 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
       />
 
       {phase.phase === "lobby" && (
-        <button type="button" className="ts-start" aria-label="start" onClick={start}>
-          start
-        </button>
+        <>
+          <p className="ts-howto">
+            Everyone takes a turn giving a one-line toast (it rotates every 45s). When it's not your
+            turn, raise a 🥂 to the toast you like best — 🥂 clinks are what climb the leaderboard.
+          </p>
+          <button type="button" className="ts-start" aria-label="start the round" onClick={start}>
+            start the round
+          </button>
+        </>
       )}
 
       {phase.phase !== "lobby" && (
-        <div className={`ts-current ${turn.isMyTurn ? "is-mine" : ""}`}>
-          <span className="ts-current-label">toasting:</span>
-          <strong>{currentName}</strong>
-          <span className="ts-countdown">{deadline.fmt}</span>
-        </div>
+        <>
+          <div className={`ts-current ${turn.isMyTurn ? "is-mine" : ""}`}>
+            <span className="ts-current-label">toasting:</span>
+            <strong>{currentName}</strong>
+            <span className="ts-countdown">{deadline.fmt}</span>
+          </div>
+          {!isMyTurn && (
+            <p className="ts-howto">
+              Raise a 🥂 to the toasts you love — it's their turn, not yours.
+            </p>
+          )}
+        </>
       )}
 
       {isMyTurn && (
@@ -149,6 +162,10 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
             give toast
           </button>
         </div>
+      )}
+
+      {phase.phase !== "lobby" && toasts.size === 0 && (
+        <p className="ts-empty">No toasts yet — they'll stack up here as people raise a glass.</p>
       )}
 
       <ul className={`ts-feed ${flash ? "is-flash" : ""}`}>

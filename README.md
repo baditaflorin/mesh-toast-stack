@@ -6,6 +6,8 @@
 
 > Rotating peer gives a one-line toast; others react 🥂/🍻; cumulative leaderboard.
 
+**Try it:** open the live URL in two tabs and name yourself in each. Click **start the round** in one — turns rotate every 45s, so each tab gets to type a one-line toast when it's their turn. Raise a 🥂 to the toasts you love; 🥂 clinks climb the leaderboard.
+
 **Live → https://baditaflorin.github.io/mesh-toast-stack/**
 
 **Source → https://github.com/baditaflorin/mesh-toast-stack**
