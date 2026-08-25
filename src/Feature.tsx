@@ -12,6 +12,7 @@ import {
   useNamedPeer,
   usePhase,
   useReactions,
+  useRoster,
   useRotatingTurn,
   type MeshConfig,
   type YRoom,
@@ -35,10 +36,11 @@ export function Feature({ room, config }: Props) {
 
 function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   const { name, setName, nameOf, myName } = useNamedPeer(config, room);
+  const roster = useRoster(room);
   const clock = useMemo(() => createClockSync(room.provider), [room]);
   useEffect(() => () => clock.destroy(), [clock]);
 
-  useFairRng(room, "ts-salts");
+  useFairRng(room, "ts-salts", { peerIds: roster.present });
   const phase = usePhase<"lobby" | "toasting" | "done">(room, "phase", "lobby");
   const toasts = useEventLog<Toast>(room, "toasts");
   const reactions = useReactions(room, "ts-reactions");
